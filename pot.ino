@@ -44,10 +44,8 @@ void loop() {
     float R1 = 10000;    
     float R2 = 0;         
     float rela = 0;
-
      LEC = analogRead(DIVISOR);
-   if(LEC) //Si detecta una resistencia
-  {
+   if(LEC) {
     rela = LEC * Ve;  
     VR2 = (rela)/1024.0; 
   rela = (Ve/VR2) -1;  
