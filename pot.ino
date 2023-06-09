@@ -9,21 +9,54 @@
  * Carnet: 2019618
  * Proyecto: Potenciometro
 */
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
-#define LED 5
-#define pot A1
-int Val_Pot;
-int ILU;
-void setup() 
-{
- Serial.begin(9600);
- pinMode(LED,OUTPUT);
- pinMode(pot,INPUT);
+#define direccion_lcd 0x27
+#define filas 2
+#define columnas 16
+#define DIVISOR A0
+
+int medicion_resistencia();
+
+//Constructor
+LiquidCrystal_I2C LCD_DAVILA(direccion_lcd, columnas, filas); 
+
+  void setup() {
+    Serial.begin(9600);
+    pinMode(DIVISOR, INPUT);
+     LCD_DAVILA.init();
+  LCD_DAVILA.backlight();
+}
+void loop() {
+  LCD_DAVILA.setCursor(0,0);
+  LCD_DAVILA.print("Resistencia :)");
+  unsigned long int ohms = medicion_resistencia();
+  LCD_DAVILA.setCursor(0,1);
+  LCD_DAVILA.print(ohms);
+  LCD_DAVILA.print(" ohm          ");
 }
 
-void loop() 
-{
- Val_Pot=analogRead(pot);
- ILU= map(Val_Pot,0,1023,0,255);
- analogWrite(LED,ILU);
-}
+ int medicion_resistencia(){
+    int LEC = 0;   
+    int Ve = 5;  
+    float VR2 = 0;    
+    float R1 = 10000;    
+    float R2 = 0;         
+    float rela = 0;
+
+     LEC = analogRead(DIVISOR);
+   if(LEC) //Si detecta una resistencia
+  {
+    rela = LEC * Ve;  
+    VR2 = (rela)/1024.0; 
+  rela = (Ve/VR2) -1;  
+    R2= (R1 * rela)-20;  
+    Serial.print("Resistancia:");
+    Serial.println(R2);
+    return R2;
+  } else {   
+    Serial.println(" No hay resistencia ");
+    return 0;
+    }
+  }
