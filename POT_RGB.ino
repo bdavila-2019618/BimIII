@@ -1,3 +1,14 @@
+/*
+ * Fundacion Kinal
+ * Centro educativo tecnico laboral Kinal
+ * Electronica
+ * Grado: Quinto
+ * Sección: A
+ * Curso: Taller de electronica digital y reparación de computadoras I
+ * Nombre: Byron Renato Dávila Santiago
+ * Carnet: 2019618
+ * Proyecto: Potenciometro RGB
+*/
 #define R 3
 #define G 5
 #define B 6
