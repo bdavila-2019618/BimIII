@@ -55,8 +55,5 @@ void loop() {
     Serial.print("Resistancia:");
     Serial.println(R2);
     return R2;
-  } else {   
-    Serial.println(" No hay resistencia ");
-    return 0;
-    }
+  }
   }
